@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_host"
+    app:startDestination="@id/listOfCharacters">
+
+    <fragment
+        android:id="@+id/favoriteCharacters"
+        android:name="kg.rickandmorty.fragments.FavoriteCharacters"
+        android:label="FavoriteCharacters"
+        tools:layout="@layout/fragment_favorite_characters"/>
+
+    <fragment
+        android:id="@+id/detailsCharacter"
+        android:name="kg.rickandmorty.fragments.DetailsCharacter"
+        android:label="DetailsCharacter"
+        tools:layout="@layout/fragment_details_character"/>
+
+    <fragment
+        android:id="@+id/listOfCharacters"
+        android:name="kg.rickandmorty.fragments.ListOfCharacters"
+        android:label="ListOfCharacters"
+        tools:layout="@layout/fragment_list_of_characters"/>
+</navigation>
