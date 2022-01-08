@@ -57,8 +57,7 @@ class ListAdapter : PagingDataAdapter<Character, ListAdapter.CharacterViewHolder
                 binding.dataLL.setBackgroundColor(aliveColor)
             }
             binding.card.setOnClickListener {
-                DetailsCharacter(character)
-                val action = ListOfCharactersDirections.actionListOfCharactersToDetailsCharacter()
+                val action = ListOfCharactersDirections.actionListOfCharactersToDetailsCharacter(character)
                 it.findNavController().navigate(action)
             }
 

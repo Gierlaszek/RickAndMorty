@@ -1,5 +1,9 @@
 package kg.rickandmorty.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Character(
     var name: String,
     var status: String,
@@ -7,4 +11,4 @@ data class Character(
     var type: String,
     var image: String,
     var isFavorite: Boolean = false
-)
+) : Parcelable

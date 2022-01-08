@@ -16,6 +16,10 @@
         android:name="kg.rickandmorty.fragments.DetailsCharacter"
         android:label="DetailsCharacter"
         tools:layout="@layout/fragment_details_character">
+        <argument
+            android:name="character"
+            app:argType="kg.rickandmorty.model.Character"
+            />
     </fragment>
 
     <fragment
