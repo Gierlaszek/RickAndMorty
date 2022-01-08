@@ -37,9 +37,11 @@
             >
 
             <LinearLayout
+                android:id="@+id/textFrame"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="0sp"
+                android:layout_weight="3"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/name"
@@ -55,7 +57,7 @@
                     android:id="@+id/status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:text="Alive"
                     android:textSize="20sp" />
@@ -64,9 +66,11 @@
 
             <ImageView
                 android:id="@+id/addFavorite"
-                android:layout_width="match_parent"
+                android:layout_width="0sp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                tools:src="@drawable/ic_favorite_characters"
+                android:tint="@color/white"
+                android:src="@drawable/ic_favorite_characters"
                 />
 
         </LinearLayout>

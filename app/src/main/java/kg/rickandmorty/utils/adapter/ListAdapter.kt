@@ -1,65 +1,77 @@
 package kg.rickandmorty.utils.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 import kg.rickandmorty.R
+import kg.rickandmorty.databinding.ItemListBinding
+import kg.rickandmorty.fragments.DetailsCharacter
+import kg.rickandmorty.fragments.ListOfCharactersDirections
 import kg.rickandmorty.model.Character
-import kotlinx.android.synthetic.main.item_list.view.*
-import java.util.ArrayList
 
-class ListAdapter : RecyclerView.Adapter<ListAdapter.CharacterViewHolder>(){
+class ListAdapter : PagingDataAdapter<Character, ListAdapter.CharacterViewHolder>(CharacterDiffCallback()){
 
-    private lateinit var listCharacters: ArrayList<Character>
-    private var deadColor: Int = 0
-    private var aliveColor: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
-        deadColor = ContextCompat.getColor(parent.context, R.color.dead)
-        aliveColor = ContextCompat.getColor(parent.context, R.color.alive)
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
-        return CharacterViewHolder(view)
+        return CharacterViewHolder(
+            ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        Picasso.get().load(listCharacters[position].image).into(holder.image)
-        holder.name.text = listCharacters[position].name
-        holder.status.text = listCharacters[position].status
-        if (listCharacters[position].status.equals("Dead")){
-            holder.card.setStrokeColor(deadColor)
-            holder.dataLL.setBackgroundColor(deadColor)
+        holder.bind(getItem(position)!!)
+    }
+
+
+    class CharacterDiffCallback : DiffUtil.ItemCallback<Character>(){
+        override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
+            return oldItem.name == newItem.name
         }
-        holder.addFavorite.setOnClickListener {
-            if (listCharacters[position].isFavorite){
-                //jesli jest dodany do ulubionych i klikniesz to usun z ulubionych
+
+        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    class CharacterViewHolder(private val binding: ItemListBinding): RecyclerView.ViewHolder(binding.root){
+
+        private val deadColor: Int = ContextCompat.getColor(binding.root.context, R.color.dead)
+        private val aliveColor: Int = ContextCompat.getColor(binding.root.context, R.color.alive)
+        private val favoriteAdded: Int = ContextCompat.getColor(binding.root.context, R.color.favorite)
+
+        fun bind(character: Character){
+            binding.name.text = character.name
+            binding.status.text = character.status
+            Picasso.get().load(character.image).into(binding.imageCharacter)
+            if(character.status.equals("Dead")){
+                binding.card.strokeColor = deadColor
+                binding.dataLL.setBackgroundColor(deadColor)
             }else{
-                //dodaj do ulubionych jesli go nie ma
+                binding.card.strokeColor = aliveColor
+                binding.dataLL.setBackgroundColor(aliveColor)
+            }
+            binding.card.setOnClickListener {
+                DetailsCharacter(character)
+                val action = ListOfCharactersDirections.actionListOfCharactersToDetailsCharacter()
+                it.findNavController().navigate(action)
+            }
+
+            binding.addFavorite.setOnClickListener {
+                System.out.println("Name: " + character.name)
+                if(character.isFavorite == true){
+                    character.isFavorite = false
+                    binding.addFavorite.setColorFilter(0)
+                }else{
+                    character.isFavorite = true
+                    binding.addFavorite.setColorFilter(favoriteAdded)
+                }
             }
         }
-    }
-
-    override fun getItemCount(): Int {
-        return listCharacters.size
-    }
-
-    fun setCharacters(characters: ArrayList<Character>){
-        listCharacters = characters
-        notifyDataSetChanged()
-    }
-
-    class CharacterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var image: ImageView = itemView.imageCharacter
-        var name: TextView = itemView.name
-        var status: TextView = itemView.status
-        var addFavorite: ImageView = itemView.addFavorite
-        var card: MaterialCardView = itemView.card
-        var dataLL: LinearLayout = itemView.dataLL
     }
 }

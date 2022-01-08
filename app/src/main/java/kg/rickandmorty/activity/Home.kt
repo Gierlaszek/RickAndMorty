@@ -7,7 +7,6 @@ import kg.rickandmorty.R
 
 @AndroidEntryPoint
 class Home : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_RickAndMorty)
         super.onCreate(savedInstanceState)
