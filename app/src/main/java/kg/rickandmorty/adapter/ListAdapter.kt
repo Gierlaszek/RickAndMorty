@@ -1,4 +1,4 @@
-package kg.rickandmorty.utils.adapter
+package kg.rickandmorty.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kg.rickandmorty.R
 import kg.rickandmorty.databinding.ItemListBinding
-import kg.rickandmorty.fragments.DetailsCharacter
-import kg.rickandmorty.fragments.ListOfCharactersDirections
+import kg.rickandmorty.ui.characterslist.ListOfCharactersDirections
 import kg.rickandmorty.model.Character
 
-class ListAdapter : PagingDataAdapter<Character, ListAdapter.CharacterViewHolder>(CharacterDiffCallback()){
-
+class ListAdapter(private val clickListener: onCLickListener, private var favoriteList: List<Character>?) : PagingDataAdapter<Character, ListAdapter.CharacterViewHolder>(CharacterDiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         return CharacterViewHolder(
-            ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            clickListener,
+            favoriteList
         )
     }
 
@@ -36,10 +36,15 @@ class ListAdapter : PagingDataAdapter<Character, ListAdapter.CharacterViewHolder
         override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
             return oldItem == newItem
         }
-
     }
 
-    class CharacterViewHolder(private val binding: ItemListBinding): RecyclerView.ViewHolder(binding.root){
+    fun setData(result: List<Character>){
+        favoriteList = result
+    }
+
+    class CharacterViewHolder(private val binding: ItemListBinding,
+                              private val clickListener: onCLickListener,
+                              private var favoriteList: List<Character>? ): RecyclerView.ViewHolder(binding.root){
 
         private val deadColor: Int = ContextCompat.getColor(binding.root.context, R.color.dead)
         private val aliveColor: Int = ContextCompat.getColor(binding.root.context, R.color.alive)
@@ -61,16 +66,28 @@ class ListAdapter : PagingDataAdapter<Character, ListAdapter.CharacterViewHolder
                 it.findNavController().navigate(action)
             }
 
-            binding.addFavorite.setOnClickListener {
-                System.out.println("Name: " + character.name)
-                if(character.isFavorite == true){
-                    character.isFavorite = false
-                    binding.addFavorite.setColorFilter(0)
-                }else{
-                    character.isFavorite = true
-                    binding.addFavorite.setColorFilter(favoriteAdded)
+            if(favoriteList != null){
+                for(favorite in favoriteList!!){
+                    if(favorite.name.equals(character.name)){
+                        character.isFavorite = true
+                        binding.addFavorite.setColorFilter(favoriteAdded)
+                    }
                 }
             }
+            if(character.isFavorite == true){
+                System.out.println("favoritelist size : " + favoriteList!!.size)
+                binding.addFavorite.setColorFilter(favoriteAdded)
+            }else{
+                binding.addFavorite.setColorFilter(0)
+            }
+
+            binding.addFavorite.setOnClickListener {
+                clickListener.onItemCLick(character)
+            }
         }
+    }
+
+    interface onCLickListener{
+        fun onItemCLick(character: Character)
     }
 }

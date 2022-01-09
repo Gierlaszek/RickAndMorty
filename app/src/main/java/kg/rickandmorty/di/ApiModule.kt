@@ -4,10 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kg.rickandmorty.api.CharacterRepository
+import kg.rickandmorty.api.CharacterRepositoryAPI
 import kg.rickandmorty.api.ServiceAPI
-import kg.rickandmorty.fragments.DetailsCharacter
-import kg.rickandmorty.model.Character
 import kg.rickandmorty.utils.Constant.BASE_URL
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -16,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @InstallIn(SingletonComponent::class)
 
 @Module
-object AppModule {
+object ApiModule {
 
     @Provides
     fun providesBaseUrl() : String{
@@ -42,8 +40,8 @@ object AppModule {
     }
 
     @Provides
-    fun providesRepository(serviceAPI: ServiceAPI) : CharacterRepository {
-        return CharacterRepository(serviceAPI)
+    fun providesRepository(serviceAPI: ServiceAPI) : CharacterRepositoryAPI {
+        return CharacterRepositoryAPI(serviceAPI)
     }
 
 }

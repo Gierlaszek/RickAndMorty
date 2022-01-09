@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import kg.rickandmorty.utils.Constant.PAGE_SIZE
 import javax.inject.Inject
 
-class CharacterRepository @Inject constructor(private val serviceAPI: ServiceAPI) {
+class CharacterRepositoryAPI @Inject constructor(private val serviceAPI: ServiceAPI) {
 
     fun getCharacter() : Flow<PagingData<Character>>{
         return Pager(

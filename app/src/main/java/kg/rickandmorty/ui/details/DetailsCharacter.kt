@@ -1,4 +1,4 @@
-package kg.rickandmorty.fragments
+package kg.rickandmorty.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
-import dagger.hilt.android.AndroidEntryPoint
 import kg.rickandmorty.R
 import kg.rickandmorty.databinding.FragmentDetailsCharacterBinding
-import kg.rickandmorty.databinding.FragmentListOfCharactersBinding
-import kg.rickandmorty.model.Character
-import javax.inject.Inject
 
 class DetailsCharacter : Fragment(R.layout.fragment_details_character) {
 

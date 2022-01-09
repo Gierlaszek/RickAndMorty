@@ -6,7 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ServiceAPI {
-
     @GET(TYPE_DATA)
     suspend fun getCharacters(@Query("page") query: Int) : CharacterListResponse
 }

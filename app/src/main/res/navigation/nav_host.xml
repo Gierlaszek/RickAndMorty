@@ -7,13 +7,17 @@
 
     <fragment
         android:id="@+id/favoriteCharacters"
-        android:name="kg.rickandmorty.fragments.FavoriteCharacters"
+        android:name="kg.rickandmorty.ui.favoritecharacters.FavoriteCharacters"
         android:label="FavoriteCharacters"
-        tools:layout="@layout/fragment_favorite_characters"/>
+        tools:layout="@layout/fragment_favorite_characters">
+        <action
+            android:id="@+id/action_favoriteCharacters_to_detailsCharacter"
+            app:destination="@id/detailsCharacter" />
+    </fragment>
 
     <fragment
         android:id="@+id/detailsCharacter"
-        android:name="kg.rickandmorty.fragments.DetailsCharacter"
+        android:name="kg.rickandmorty.ui.details.DetailsCharacter"
         android:label="DetailsCharacter"
         tools:layout="@layout/fragment_details_character">
         <argument
@@ -24,11 +28,14 @@
 
     <fragment
         android:id="@+id/listOfCharacters"
-        android:name="kg.rickandmorty.fragments.ListOfCharacters"
+        android:name="kg.rickandmorty.ui.characterslist.ListOfCharacters"
         android:label="ListOfCharacters"
         tools:layout="@layout/fragment_list_of_characters">
         <action
             android:id="@+id/action_listOfCharacters_to_detailsCharacter"
             app:destination="@id/detailsCharacter" />
+        <action
+            android:id="@+id/action_listOfCharacters_to_favoriteCharacters"
+            app:destination="@id/favoriteCharacters" />
     </fragment>
 </navigation>

@@ -1,22 +1,25 @@
-package kg.rickandmorty.fragments
+package kg.rickandmorty.ui.characterslist
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kg.rickandmorty.R
 import kg.rickandmorty.databinding.FragmentListOfCharactersBinding
-import kg.rickandmorty.utils.adapter.ListAdapter
-import kg.rickandmorty.utils.viewmodel.ListCharactersViewModel
+import kg.rickandmorty.model.Character
+import kg.rickandmorty.adapter.ListAdapter
+import kg.rickandmorty.ui.favoritecharacters.FavoriteCharactersViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListOfCharacters : Fragment(R.layout.fragment_list_of_characters) {
+class ListOfCharacters : Fragment(R.layout.fragment_list_of_characters), ListAdapter.onCLickListener{
 
     private var _binding: FragmentListOfCharactersBinding? = null
     private lateinit var listAdapter: ListAdapter
@@ -24,6 +27,7 @@ class ListOfCharacters : Fragment(R.layout.fragment_list_of_characters) {
         get() = _binding!!
     private val viewModel: ListCharactersViewModel by viewModels()
 
+    private val favoriteListViewModel: FavoriteCharactersViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,10 +40,19 @@ class ListOfCharacters : Fragment(R.layout.fragment_list_of_characters) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        listAdapter = ListAdapter()
+        listAdapter = ListAdapter(this, favoriteListViewModel.getFavoriteCharacters().value)
         setupAdapter()
+        collectFavoriteData()
         collectData()
+    }
+
+    private fun collectFavoriteData(){
+        favoriteListViewModel.getFavoriteCharacters().observe(viewLifecycleOwner, Observer { response ->
+            if(response.size > 0){
+                listAdapter.setData(response)
+                listAdapter.notifyDataSetChanged()
+            }
+        })
     }
 
     private fun collectData(){
@@ -54,5 +67,19 @@ class ListOfCharacters : Fragment(R.layout.fragment_list_of_characters) {
         binding.listOfCharactersRV.apply {
             adapter = listAdapter
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onItemCLick(character: Character) {
+        System.out.println("Name " + character.name + " is favorite " + character.isFavorite)
+        if(character.isFavorite){
+            character.isFavorite = false
+            favoriteListViewModel.delete(character)
+        }else{
+            character.isFavorite = true
+            favoriteListViewModel.insert(character)
+        }
+        System.out.println("Name after" + character.name + " is favorite " + character.isFavorite)
+        listAdapter.notifyDataSetChanged()
     }
 }

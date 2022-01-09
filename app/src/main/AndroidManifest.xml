@@ -13,7 +13,7 @@
         android:theme="@style/Theme.RickAndMorty"
         android:name=".MainApplication">
         <activity
-            android:name=".activity.Home"
+            android:name=".ui.activity.Home"
             android:theme="@style/splashScreen"
             android:exported="true">
             <intent-filter>
