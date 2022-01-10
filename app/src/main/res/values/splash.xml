@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="splashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:colorBackground">#FF27140F</item>
+        <item name="android:colorBackground">@color/black</item>
         <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:statusBarColor">@color/black</item>
         <item name="android:delay">500</item>
     </style>
 </resources>

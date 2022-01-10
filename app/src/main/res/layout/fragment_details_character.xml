@@ -33,12 +33,12 @@
 
                 <TextView
                     android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:textStyle="bold"
-                    android:text="Rick Sanchez"
+                    android:text="@string/template_name"
                     android:textSize="20sp" />
 
                 <TextView
@@ -48,7 +48,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Alive"
+                    android:text="@string/template_status"
                     android:textSize="17sp" />
 
             </RelativeLayout>
@@ -76,12 +76,12 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:textStyle="bold"
-                    android:text="Human"
+                    android:text="@string/template_species"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/type"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"

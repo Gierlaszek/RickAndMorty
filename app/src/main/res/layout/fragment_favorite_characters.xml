@@ -9,7 +9,7 @@
         android:id="@+id/titleCharacter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Favorite"
+        android:text="@string/nameOfFragmentFavorite"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/listOfCharacters"

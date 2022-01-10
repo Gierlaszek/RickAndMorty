@@ -1,6 +1,5 @@
 package kg.rickandmorty.ui.characterslist
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListOfCharacters : Fragment(R.layout.fragment_list_of_characters), ListAdapter.onCLickListener{
+class ListOfCharacters: Fragment(R.layout.fragment_list_of_characters), ListAdapter.onCLickListener{
 
     private var _binding: FragmentListOfCharactersBinding? = null
     private lateinit var listAdapter: ListAdapter
@@ -69,9 +68,7 @@ class ListOfCharacters : Fragment(R.layout.fragment_list_of_characters), ListAda
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onItemCLick(character: Character) {
-        System.out.println("Name " + character.name + " is favorite " + character.isFavorite)
+    override fun onItemCLick(character: Character, position: Int) {
         if(character.isFavorite){
             character.isFavorite = false
             favoriteListViewModel.delete(character)
@@ -79,7 +76,6 @@ class ListOfCharacters : Fragment(R.layout.fragment_list_of_characters), ListAda
             character.isFavorite = true
             favoriteListViewModel.insert(character)
         }
-        System.out.println("Name after" + character.name + " is favorite " + character.isFavorite)
-        listAdapter.notifyDataSetChanged()
+        listAdapter.notifyItemChanged(position)
     }
 }

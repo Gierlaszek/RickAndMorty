@@ -43,7 +43,7 @@ class FavoriteCharacters : Fragment(R.layout.fragment_favorite_characters), Favo
     @SuppressLint("NotifyDataSetChanged")
     private fun collectData(){
         viewModel.getFavoriteCharacters().observe(viewLifecycleOwner, Observer { response ->
-            if(response.size > 0){
+            if(response.size >= 0){
                 listAdapter.setData(response)
                 listAdapter.notifyDataSetChanged()
             }

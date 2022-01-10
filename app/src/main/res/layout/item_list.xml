@@ -50,7 +50,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:textStyle="bold"
-                    android:text="Rick Sanchez"
+                    android:maxLines="2"
+                    android:text="@string/template_name"
                     android:textSize="20sp" />
 
                 <TextView
@@ -59,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
-                    android:text="Alive"
+                    android:text="@string/template_status"
                     android:textSize="20sp" />
 
             </LinearLayout>

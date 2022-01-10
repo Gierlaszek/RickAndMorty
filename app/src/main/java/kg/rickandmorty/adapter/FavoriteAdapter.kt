@@ -22,7 +22,9 @@ class FavoriteAdapter(private val clickListener: onCLickListener,
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        holder.bind(result[position])
+        if(itemCount > 0 ){
+            holder.bind(result[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -56,6 +58,8 @@ class FavoriteAdapter(private val clickListener: onCLickListener,
                     FavoriteCharactersDirections.actionFavoriteCharactersToDetailsCharacter(character)
                 it.findNavController().navigate(action)
             }
+
+            binding.addFavorite.setColorFilter(favoriteAdded)
 
             binding.addFavorite.setOnClickListener {
                 clickListener.onItemCLick(character)

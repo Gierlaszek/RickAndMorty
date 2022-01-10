@@ -24,7 +24,7 @@ class ListAdapter(private val clickListener: onCLickListener, private var favori
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(getItem(position)!!)
+        holder.bind(getItem(position)!!, position)
     }
 
 
@@ -50,7 +50,7 @@ class ListAdapter(private val clickListener: onCLickListener, private var favori
         private val aliveColor: Int = ContextCompat.getColor(binding.root.context, R.color.alive)
         private val favoriteAdded: Int = ContextCompat.getColor(binding.root.context, R.color.favorite)
 
-        fun bind(character: Character){
+        fun bind(character: Character, position: Int){
             binding.name.text = character.name
             binding.status.text = character.status
             Picasso.get().load(character.image).into(binding.imageCharacter)
@@ -75,19 +75,18 @@ class ListAdapter(private val clickListener: onCLickListener, private var favori
                 }
             }
             if(character.isFavorite == true){
-                System.out.println("favoritelist size : " + favoriteList!!.size)
                 binding.addFavorite.setColorFilter(favoriteAdded)
             }else{
                 binding.addFavorite.setColorFilter(0)
             }
 
             binding.addFavorite.setOnClickListener {
-                clickListener.onItemCLick(character)
+                clickListener.onItemCLick(character, position)
             }
         }
     }
 
     interface onCLickListener{
-        fun onItemCLick(character: Character)
+        fun onItemCLick(character: Character, position: Int)
     }
 }
