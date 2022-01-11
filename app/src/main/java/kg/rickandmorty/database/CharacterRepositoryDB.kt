@@ -1,6 +1,5 @@
 package kg.rickandmorty.database
 
-import androidx.annotation.WorkerThread
 import kg.rickandmorty.model.Character
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -9,12 +8,10 @@ import javax.inject.Inject
 
 class CharacterRepositoryDB @Inject constructor(private val database: CharacterDatabase){
 
-    @WorkerThread
     suspend fun insert(character: Character) = withContext(Dispatchers.IO){
         database.characterDao().insertCharacter(character)
     }
 
-    @WorkerThread
     suspend fun delete(character: Character) = withContext(Dispatchers.IO){
         database.characterDao().deleteCharacter(character)
     }
