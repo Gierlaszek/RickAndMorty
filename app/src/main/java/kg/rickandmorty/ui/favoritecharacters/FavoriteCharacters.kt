@@ -15,7 +15,7 @@ import kg.rickandmorty.model.Character
 import kg.rickandmorty.adapter.FavoriteAdapter
 
 @AndroidEntryPoint
-class FavoriteCharacters : Fragment(R.layout.fragment_favorite_characters), FavoriteAdapter.onCLickListener{
+class FavoriteCharacters : Fragment(), FavoriteAdapter.onCLickListener{
 
     private var _binding: FragmentFavoriteCharactersBinding? = null
     private val binding: FragmentFavoriteCharactersBinding
