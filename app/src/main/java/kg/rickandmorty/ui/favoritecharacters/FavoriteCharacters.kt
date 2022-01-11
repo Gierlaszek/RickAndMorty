@@ -7,15 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
-import kg.rickandmorty.R
 import kg.rickandmorty.databinding.FragmentFavoriteCharactersBinding
 import kg.rickandmorty.model.Character
 import kg.rickandmorty.adapter.FavoriteAdapter
 
 @AndroidEntryPoint
-class FavoriteCharacters : Fragment(), FavoriteAdapter.onCLickListener{
+class FavoriteCharacters : Fragment(), FavoriteAdapter.OnCLickListener{
 
     private var _binding: FragmentFavoriteCharactersBinding? = null
     private val binding: FragmentFavoriteCharactersBinding
@@ -42,7 +40,7 @@ class FavoriteCharacters : Fragment(), FavoriteAdapter.onCLickListener{
 
     @SuppressLint("NotifyDataSetChanged")
     private fun collectData(){
-        viewModel.getFavoriteCharacters().observe(viewLifecycleOwner, Observer { response ->
+        viewModel.getFavoriteCharacters().observe(viewLifecycleOwner, { response ->
             if(response.size >= 0){
                 listAdapter.setData(response)
                 listAdapter.notifyDataSetChanged()
