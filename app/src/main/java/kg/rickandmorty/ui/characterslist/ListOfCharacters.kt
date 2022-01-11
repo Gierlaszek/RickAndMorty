@@ -1,15 +1,14 @@
 package kg.rickandmorty.ui.characterslist
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kg.rickandmorty.R
 import kg.rickandmorty.databinding.FragmentListOfCharactersBinding
 import kg.rickandmorty.model.Character
 import kg.rickandmorty.adapter.ListAdapter
@@ -18,7 +17,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListOfCharacters: Fragment(), ListAdapter.onCLickListener{
+class ListOfCharacters: Fragment(), ListAdapter.OnCLickListener{
 
     private var _binding: FragmentListOfCharactersBinding? = null
     private lateinit var listAdapter: ListAdapter
@@ -45,9 +44,10 @@ class ListOfCharacters: Fragment(), ListAdapter.onCLickListener{
         collectData()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun collectFavoriteData(){
-        favoriteListViewModel.getFavoriteCharacters().observe(viewLifecycleOwner, Observer { response ->
-            if(response.size > 0){
+        favoriteListViewModel.getFavoriteCharacters().observe(viewLifecycleOwner, { response ->
+            if(response.size >= 0){
                 listAdapter.setData(response)
                 listAdapter.notifyDataSetChanged()
             }
@@ -68,14 +68,13 @@ class ListOfCharacters: Fragment(), ListAdapter.onCLickListener{
         }
     }
 
-    override fun onItemCLick(character: Character, position: Int) {
+    override fun onItemCLick(character: Character) {
         if(character.isFavorite){
-            character.isFavorite = false
             favoriteListViewModel.delete(character)
+            character.isFavorite = false
         }else{
-            character.isFavorite = true
             favoriteListViewModel.insert(character)
+            character.isFavorite = true
         }
-        listAdapter.notifyItemChanged(position)
     }
 }
