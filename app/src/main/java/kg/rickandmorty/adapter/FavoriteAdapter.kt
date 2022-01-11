@@ -11,7 +11,7 @@ import kg.rickandmorty.databinding.ItemListBinding
 import kg.rickandmorty.ui.favoritecharacters.FavoriteCharactersDirections
 import kg.rickandmorty.model.Character
 
-class FavoriteAdapter(private val clickListener: onCLickListener,
+class FavoriteAdapter(private val clickListener: OnCLickListener,
                       private var result: List<Character>): RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
@@ -36,7 +36,7 @@ class FavoriteAdapter(private val clickListener: onCLickListener,
     }
 
     class FavoriteViewHolder(private val binding: ItemListBinding,
-                             private val clickListener: onCLickListener): RecyclerView.ViewHolder(binding.root){
+                             private val clickListener: OnCLickListener): RecyclerView.ViewHolder(binding.root){
 
         private val deadColor: Int = ContextCompat.getColor(binding.root.context, R.color.dead)
         private val aliveColor: Int = ContextCompat.getColor(binding.root.context, R.color.alive)
@@ -46,28 +46,22 @@ class FavoriteAdapter(private val clickListener: onCLickListener,
             binding.name.text = character.name
             binding.status.text = character.status
             Picasso.get().load(character.image).into(binding.imageCharacter)
-            if (character.status.equals("Dead")) {
-                binding.card.strokeColor = deadColor
-                binding.dataLL.setBackgroundColor(deadColor)
-            } else {
-                binding.card.strokeColor = aliveColor
-                binding.dataLL.setBackgroundColor(aliveColor)
-            }
+            binding.card.strokeColor = if(character.status == "Dead") deadColor else aliveColor
+            binding.textFrame.setBackgroundColor(if (character.status == "Dead") deadColor else aliveColor)
+
             binding.card.setOnClickListener {
                 val action =
                     FavoriteCharactersDirections.actionFavoriteCharactersToDetailsCharacter(character)
                 it.findNavController().navigate(action)
             }
-
             binding.addFavorite.setColorFilter(favoriteAdded)
-
             binding.addFavorite.setOnClickListener {
                 clickListener.onItemCLick(character)
             }
         }
     }
 
-    interface onCLickListener{
+    interface OnCLickListener{
         fun onItemCLick(character: Character)
     }
 }
