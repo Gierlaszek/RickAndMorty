@@ -42,12 +42,7 @@ class DetailsCharacter : Fragment() {
         binding.species.text = args.character.species
         binding.type.text = args.character.type
 
-        if(args.character.status.equals("Dead")){
-            binding.card.strokeColor = deadColor
-            binding.restOfCard.setBackgroundColor(deadColor)
-        }else{
-            binding.card.strokeColor = aliveColor
-            binding.restOfCard.setBackgroundColor(aliveColor)
-        }
+        binding.card.strokeColor = if(args.character.status == "Dead") deadColor else aliveColor
+        binding.restOfCard.setBackgroundColor(if(args.character.status == "Dead") deadColor else aliveColor)
     }
 }
