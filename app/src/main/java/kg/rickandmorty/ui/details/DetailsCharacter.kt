@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 import kg.rickandmorty.R
 import kg.rickandmorty.databinding.FragmentDetailsCharacterBinding
 
-class DetailsCharacter : Fragment(R.layout.fragment_details_character) {
+class DetailsCharacter : Fragment() {
 
     private var _binding: FragmentDetailsCharacterBinding? = null
     private val binding: FragmentDetailsCharacterBinding
