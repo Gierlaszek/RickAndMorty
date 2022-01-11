@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListOfCharacters: Fragment(R.layout.fragment_list_of_characters), ListAdapter.onCLickListener{
+class ListOfCharacters: Fragment(), ListAdapter.onCLickListener{
 
     private var _binding: FragmentListOfCharactersBinding? = null
     private lateinit var listAdapter: ListAdapter
